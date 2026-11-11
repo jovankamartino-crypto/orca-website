@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="OrcaGuard is a non-profit conservation organization protecting killer whales and restoring the ocean ecosystems they depend on.">
+<meta name="keywords" content="orca, killer whale, ocean conservation, endangered species, marine protection, volunteer, donate">
+<title>OrcaGuard | Protecting Orcas and the Ocean</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Overpass+Mono:wght@400;500&family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --cyan:#6ceeff;
+  --navy:#101c22;
+  --display:'Syne',Arial,sans-serif;
+  --mono:'Overpass Mono',monospace;
+  --serif:'Times New Roman',serif;
+  --sans:'Arimo',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background-color:var(--navy);color:#fff;font-family:var(--mono);line-height:1.6}
+
+/* Header and menu */
+header{
+  position:fixed;top:0;left:0;right:0;height:84px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;background:rgba(16,28,34,.92);backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(108,238,255,.5);z-index:50;font-family:var(--sans);
+}
+.logo{font-weight:700;font-size:28px;color:#fff;text-decoration:none}
+.logo span{color:var(--cyan)}
+#menu{display:flex;align-items:center;gap:32px}
+#menu a{color:#fff;text-decoration:none;font-size:22px;text-transform:uppercase}
+#menu a:hover,#menu a.active{color:var(--cyan)}
+.btn{
+  display:inline-block;background:var(--cyan);color:#000;font-family:var(--sans);
+  font-size:22px;padding:10px 22px;border:0;cursor:pointer;
+  text-decoration:none;text-transform:uppercase;
+}
+#menu a.btn{color:#000}
+#menu a.btn:hover{background:#fff}
+#menuBtn{display:none;background:none;border:1px solid var(--cyan);color:var(--cyan);font-size:28px;padding:2px 12px;cursor:pointer}
+
+/* Sections */
+section{padding:120px 24px 70px;background-size:cover;background-position:center}
+.inner{max-width:1200px;margin:0 auto}
+h1,h2{font-family:var(--display);text-transform:uppercase;line-height:1.15}
+h1{font-size:clamp(36px,6vw,88px);color:var(--cyan);max-width:800px}
+h2{font-size:clamp(30px,4.5vw,64px);color:var(--cyan);margin-bottom:26px}
+h3{font-family:var(--serif);font-size:28px;margin-bottom:10px}
+p{font-size:19px;margin-bottom:18px}
+mark{background:var(--cyan);color:#000;padding:0 4px}
+.cy{color:var(--cyan)}
+.white{color:#fff}
+ul,ol{margin:0 0 20px 28px;font-size:19px}
+li{margin-bottom:10px}
+
+#home{background-image:linear-gradient(90deg,#0b1a2b 30%,rgba(11,26,43,.2)),url('imageshero-whale.jpg');min-height:100vh}
+#about{background-image:linear-gradient(#101c22,#1a6a8f)}
+#endangerment{background-image:linear-gradient(rgba(60,130,190,.25),rgba(10,50,100,.65)),url('orca-surface.jpg')}
+#volunteer{background-image:linear-gradient(rgba(22,50,80,.8),rgba(22,50,80,.8)),url('waves.jpg')}
+#donate{background-color:#101c22;text-align:center}
+
+.stats{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-top:50px}
+.stat{text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:56px;color:var(--cyan)}
+.stat span{text-transform:uppercase;font-size:18px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.glass{background:rgba(40,90,140,.55);border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:28px 32px}
+.pic{width:100%;border-radius:20px;display:block}
+.wide{max-height:380px;object-fit:cover;margin:30px 0}
+.cutout{width:100%;transform:scale(1.5);transform-origin:left center;filter:drop-shadow(0 0 25px rgba(108,238,255,.5))}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin:30px 0}
+.card{background:rgba(16,40,80,.75);border:1px solid #2f6f98;padding:20px}
+.card p{color:#c6d3e0;font-size:17px;margin:0}
+video{width:100%;max-width:900px;display:block;margin:20px auto;border-radius:20px}
+
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin:30px 0}
+.tier{background:#141c30;border:2px solid #2f6f98;padding:20px;text-align:center;cursor:pointer;color:#fff;font:inherit}
+.tier b{display:block;font-family:var(--serif);font-size:64px}
+.tier span{font-size:17px}
+.tier:hover,.tier.selected{border-color:var(--cyan);background:#1b2c4a}
+
+input{display:block;width:100%;max-width:560px;height:64px;background:#115483;border:1px solid #fff;color:#fff;font:20px var(--mono);padding:0 20px;margin-bottom:20px}
+input::placeholder{color:#cfe8f5}
+.msg{color:var(--cyan);min-height:28px;margin-top:16px}
+
+footer{background:rgba(10,18,22,.97);border-top:1px solid rgba(108,238,255,.5);text-align:center;padding:30px 20px;font-family:var(--sans)}
+footer p{font-size:16px;margin:6px 0}
+footer a{color:var(--cyan)}
+
+/* Interactive feedback */
+.msg.error{color:#ff9b9b}
+.msg.ok{color:#8dffb0}
+input.invalid{border-color:#ff9b9b}
+input.valid{border-color:#8dffb0}
+#topBtn{position:fixed;right:20px;bottom:20px;width:52px;height:52px;border:0;background:var(--cyan);color:#000;font-size:26px;cursor:pointer;display:none;z-index:60}
+#topBtn:hover{background:#fff}
+.factbox{margin-top:40px}
+.factbox .msg{font-size:22px;color:#fff;margin-top:20px;max-width:700px}
+
+#volunteer .inner{text-align:center}
+#volunteer p{margin-left:auto;margin-right:auto}
+#volunteer ol{width:fit-content;max-width:800px;margin-left:auto;margin-right:auto;text-align:left}
+#volunteer form{max-width:700px;margin:0 auto;text-align:center}
+#volunteer input{margin-left:auto;margin-right:auto}
+
+@media(max-width:900px){
+  header{padding:0 16px}
+  .logo{font-size:22px}
+  #menuBtn{display:block}
+  #menu{display:none;position:absolute;top:84px;left:0;right:0;flex-direction:column;background:#101c22;padding:20px;gap:18px}
+  #menu.open{display:flex}
+  .two,.grid,.tiers{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="#home">ORCA<span>GUARD.COM</span></a>
+  <button id="menuBtn" aria-label="Open menu">☰</button>
+  <nav id="menu">
+    <a href="#home">Home</a>
+    <a href="#about">About Us</a>
+    <a href="#endangerment">Endangerment</a>
+    <a href="#volunteer">Volunteer</a>
+    <a class="btn" href="#donate">Donate</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section id="home">
+  <div class="inner">
+    <h1>Guardian of the ocean's voice</h1>
+    <p style="max-width:660px;margin-top:30px">Orcas are the <strong>architects of a healthy ocean</strong>. When they vanish, the entire marine ecosystem <em>unravels</em>. We exist to make sure that never happens.</p>
+    <a class="btn" href="#about">Learn more</a>
+
+    <div class="stats">
+      <div class="stat"><b data-count="50000" data-prefix="~">~50,000</b><span>Orcas remaining worldwide</span></div>
+      <div class="stat"><b data-count="3" data-prefix="+">+3</b><span>Sub-populations critically endangered</span></div>
+      <div class="stat"><b data-count="12" data-prefix="+">+12</b><span>Active conservation projects</span></div>
+    </div>
+
+    <div class="factbox">
+      <button class="btn" id="factBtn">Show an orca fact</button>
+      <p class="msg" id="factText"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="inner">
+    <h2>Who we are &amp; <span class="white">why we exist</span></h2>
+    <div class="two about-grid">
+  <img class="cutout" src="orca-cutoutt.png" alt="An orca swimming">
+      <div>
+        <p>OrcaGuard is a non-profit conservation organization dedicated to protecting killer whales and restoring the ocean ecosystems they depend on. Founded in 2016, we operate at the intersection of direct conservation action, public education, and systemic change.</p>
+        <p>We believe that saving orcas means saving the ocean itself. Our work spans ocean cleanup expeditions, reducing noise and chemical pollution from shipping lanes, protecting the prey species orcas rely on, and advocating for stronger marine protection laws on a global scale.</p>
+        <p>We are scientists, divers, activists, educators, and ocean lovers — united by the conviction that the ocean's top predators are worth fighting for.</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top:50px">What we do</h2>
+    <div class="grid">
+      <div class="card"><h3>Ocean Cleanup</h3><p>We organize coastal and deep-water cleanup campaigns removing plastic, chemical waste, and debris that poisons orca habitats.</p></div>
+      <div class="card"><h3>Global Partnerships</h3><p>Collaborating with indigenous communities, governments, and NGOs to build coalitions that scale our impact worldwide.</p></div>
+      <div class="card"><h3>Public Education</h3><p>School programs, community workshops, and digital campaigns that build the next generation of ocean stewards.</p></div>
+      <div class="card"><h3>Research &amp; Monitoring</h3><p>Our field teams track orca populations, health, and migration using photo-ID, acoustic monitoring, and drone technology.</p></div>
+      <div class="card"><h3>Policy Advocacy</h3><p>We lobby for stricter regulations on industrial fishing, acoustic disturbances, and marine pollution at national and international levels.</p></div>
+      <div class="card"><h3>Prey Recovery</h3><p>Supporting salmon and chinook population recovery — the primary food source for Southern Resident orcas facing starvation.</p></div>
+    </div>
+
+    <img class="pic wide" src="dolphins(1).jpg" alt="Dolphins swimming in deep blue water">
+
+    <h2>Vision &amp; <span class="white">Mission</span></h2>
+    <div class="two" style="align-items:start">
+      <div class="glass">
+        <p class="cy"><strong>OUR VISION</strong></p>
+        <h3>A world where orcas thrive in clean, abundant, and protected oceans</h3>
+        <p>We envision a future where every orca population is stable and growing — where the sounds that fill the ocean are whale song, not engine noise; where salmon run free in unobstructed rivers; and where the ocean is clean enough to sustain life for thousands of generations to come.</p>
+        <p>Our vision is not just about orcas. It is about an ocean in balance, a climate stabilized, and a humanity that has learned to live in harmony with the natural world.</p>
+      </div>
+      <div class="glass">
+        <p class="cy"><strong>OUR MISSION</strong></p>
+        <h3>To protect orcas through direct action, science, and systemic change</h3>
+        <p>OrcaGuard's mission is to reverse the decline of killer whale populations by addressing the root causes of their endangerment — ocean pollution, habitat destruction, prey depletion, and human-caused noise.</p>
+        <p>We do this through hands-on ocean cleanups, rigorous scientific research, community mobilization, and relentless advocacy for policy reform. Every action we take is guided by one question: <mark>"Does this help the orca survive?"</mark></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENDANGERMENT -->
+<section id="endangerment">
+  <div class="inner">
+    <h2>Why are orcas <span class="white">endangered?</span></h2>
+    <div class="two">
+      <div class="glass">
+        <p>Orcas are apex predators — <strong>keystone species</strong> that regulate the health of entire marine food webs. Yet today, several orca populations stand at the brink of extinction. The Southern Resident killer whales of the Pacific Northwest number <mark>fewer than 75 individuals</mark>. Multiple populations in European, Antarctic, and Pacific waters face critical threats from human activity.</p>
+        <p>Orca decline is not caused by one single factor. It is the cumulative weight of a civilization that has treated the ocean as a dump, a highway, and an inexhaustible food source.</p>
+      </div>
+      <img class="pic" src="orca-surface.jpg" alt="An orca fin above the ocean surface">
+    </div>
+
+    <h2 style="margin-top:50px">The main threats</h2>
+    <ul class="glass" style="padding:28px 32px 28px 56px">
+      <li><strong>Chemical &amp; Plastic Pollution:</strong> PCBs, heavy metals, and microplastics accumulate in orcas' blubber, weakening immune systems and impairing reproduction.</li>
+      <li><strong>Climate Change &amp; Warming Oceans:</strong> Rising temperatures shift prey distributions and melt sea ice, destabilizing the ecosystems orcas rely on.</li>
+      <li><strong>Prey Depletion &amp; Starvation:</strong> Industrial overfishing has devastated chinook salmon. Southern Residents lose calves primarily due to malnutrition.</li>
+    </ul>
+
+    <h2>Watch</h2>
+    <video controls poster="orca-surface.jpg">
+      <source src="4ocean Partnerships _ Orca Conservancy.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <h2>How you can help</h2>
+    <ol>
+      <li>Reduce your plastic use</li>
+      <li>Choose sustainable seafood</li>
+      <li>Volunteer with OrcaGuard</li>
+      <li>Donate to fund our conservation work</li>
+    </ol>
+  </div>
+</section>
+
+<!-- VOLUNTEER -->
+<section id="volunteer">
+  <div class="inner">
+    <h2>Join us ~ <span class="white">become a volunteer</span></h2>
+    <p style="max-width:800px">You don't need to be a marine biologist to save an orca. You need passion, commitment, and a willingness to show up. OrcaGuard volunteers are the backbone of everything we do — from beach cleanups to community outreach to scientific fieldwork.</p>
+
+    <ol class="glass" style="padding:28px 32px 28px 56px;margin-top:30px">
+      <li><strong>Apply Online:</strong> Fill out our volunteer application form. Tell us about your background, skills, and the role you're most interested in.</li>
+      <li><strong>Orientation &amp; Training:</strong> Attend a free orientation session (offline or online). Role-specific training modules are provided.</li>
+      <li><strong>Get in the Water:</strong> Join your first project — a cleanup, a monitoring expedition, or an outreach event.</li>
+    </ol>
+
+    <img class="pic wide" src="ocean waves crashing on rocks.jpg" alt="Ocean waves crashing on rock">
+
+    <h2 style="margin-top:30px">Ready to make waves?</h2>
+    <p>Join thousands of volunteers worldwide who are already fighting for the ocean's future. Start your application today — the orcas need you.</p>
+    <form id="volForm" class="glass" novalidate>
+      <input type="text" name="fullname" placeholder="Your full name">
+      <input type="email" name="email" placeholder="Your email address">
+      <button type="submit" class="btn">Apply Now</button>
+      <p class="msg" id="formMsg"></p>
+    </form>
+  </div>
+</section>
+
+<!-- DONATE -->
+<section id="donate">
+  <div class="inner">
+    <h2>Donate <span class="white">&amp; fund the mission</span></h2>
+    <p style="max-width:900px;margin:0 auto 20px">100% of your donation funds direct conservation work. Choose a giving tier below, or enter a custom amount. Every dollar is tracked, reported, and put to work for the ocean.</p>
+
+    <div class="tiers">
+      <button class="tier" data-amount="15"><b>$15</b><span>Funds removal of 5 kg of plastic waste from coastal habitats</span></button>
+      <button class="tier" data-amount="50"><b>$50</b><span>Sponsors one hour of acoustic monitoring equipment for orca tracking</span></button>
+      <button class="tier" data-amount="100"><b>$100</b><span>Funds a full day of fieldwork for one research volunteer</span></button>
+      <button class="tier" data-amount="200"><b>$200</b><span>Sponsors a full ocean cleanup expedition in a critical orca habitat</span></button>
+    </div>
+
+    <p>Or enter your own amount ($):</p>
+    <input type="number" id="customAmount" min="1" placeholder="Custom amount" style="margin:0 auto 20px">
+
+    <p>Click this button to continue:</p>
+    <a class="btn" id="donateBtn" href="#donate">Donate Now</a>
+    <p class="msg" id="donateMsg"></p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 OrcaGuard.com | Protecting orcas and the ocean.</p>
+  <p><a href="#home">Home</a> | <a href="#about">About Us</a> | <a href="#endangerment">Endangerment</a> | <a href="#volunteer">Volunteer</a> | <a href="#donate">Donate</a></p>
+  <p>Learn more: <a href="https://www.fisheries.noaa.gov/species/killer-whale" target="_blank" rel="noopener">NOAA Fisheries</a> | <a href="https://www.worldwildlife.org/" target="_blank" rel="noopener">WWF</a></p>
+</footer>
+
+<button id="topBtn" aria-label="Back to top">↑</button>
+
+<script>
+// Redirect links (set to "" to stay on the page and only show the message)
+const VOLUNTEER_LINK = "https://claude.ai/public/artifacts/dae6e71a-7a6d-4967-b73d-3e7fa26c7be0";
+const DONATION_LINK  = "https://claude.ai/public/artifacts/d385a18f-b8d5-4e1e-9c7e-6430de17622a";
+
+// 1. Mobile menu toggle
+const menu = document.getElementById("menu");
+document.getElementById("menuBtn").addEventListener("click", function () {
+  menu.classList.toggle("open");
+});
+menu.querySelectorAll("a").forEach(function (a) {
+  a.addEventListener("click", function () { menu.classList.remove("open"); });
+});
+
+// 2. Highlight the menu link of the section you are viewing
+const sections = document.querySelectorAll("section");
+const links = document.querySelectorAll("#menu a:not(.btn)");
+function highlightMenu() {
+  let current = "home";
+  sections.forEach(function (s) {
+    if (window.scrollY >= s.offsetTop - 140) current = s.id;
+  });
+  links.forEach(function (a) {
+    a.classList.toggle("active", a.getAttribute("href") === "#" + current);
+  });
+}
+
+// 3. Animated stat counters
+document.querySelectorAll("[data-count]").forEach(function (el) {
+  const target = Number(el.dataset.count);
+  const prefix = el.dataset.prefix || "";
+  const step = Math.max(1, Math.ceil(target / 60));
+  let n = 0;
+  const timer = setInterval(function () {
+    n = Math.min(n + step, target);
+    el.textContent = prefix + n.toLocaleString();
+    if (n >= target) clearInterval(timer);
+  }, 25);
+});
+
+// 4. Donation: tier picker + custom amount
+const tiers = document.querySelectorAll(".tier");
+const customAmount = document.getElementById("customAmount");
+const donateMsg = document.getElementById("donateMsg");
+let amount = 0;
+
+tiers.forEach(function (t) {
+  t.addEventListener("click", function () {
+    tiers.forEach(function (x) { x.classList.remove("selected"); });
+    t.classList.add("selected");
+    customAmount.value = "";
+    amount = Number(t.dataset.amount);
+    donateMsg.className = "msg ok";
+    donateMsg.textContent = "You selected $" + amount + ". Thank you for protecting orcas!";
+  });
+});
+
+customAmount.addEventListener("input", function () {
+  tiers.forEach(function (x) { x.classList.remove("selected"); });
+  amount = Number(customAmount.value);
+  if (amount > 0) {
+    donateMsg.className = "msg ok";
+    donateMsg.textContent = "You entered $" + amount + ". Thank you for protecting orcas!";
+  } else {
+    amount = 0;
+    donateMsg.className = "msg error";
+    donateMsg.textContent = "Please enter an amount greater than $0.";
+  }
+});
+
+document.getElementById("donateBtn").addEventListener("click", function (e) {
+  e.preventDefault();
+  if (!amount) {
+    donateMsg.className = "msg error";
+    donateMsg.textContent = "Please choose a giving tier or enter an amount first.";
+    return;
+  }
+  donateMsg.className = "msg ok";
+  donateMsg.textContent = "Taking you to the donation page for $" + amount + "...";
+  if (DONATION_LINK) setTimeout(function () { window.location.href = DONATION_LINK; }, 1200);
+});
+
+// 5. Volunteer form: validation (with "Email is invalid")
+const form = document.getElementById("volForm");
+const emailInput = form.email;
+const formMsg = document.getElementById("formMsg");
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+// Live check while typing
+emailInput.addEventListener("input", function () {
+  const value = emailInput.value.trim();
+  if (value === "") {
+    emailInput.className = "";
+    formMsg.textContent = "";
+  } else if (emailPattern.test(value)) {
+    emailInput.className = "valid";
+    formMsg.className = "msg ok";
+    formMsg.textContent = "Email looks good.";
+  } else {
+    emailInput.className = "invalid";
+    formMsg.className = "msg error";
+    formMsg.textContent = "Email is invalid";
+  }
+});
+
+// Check again on submit
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const name = form.fullname.value.trim();
+  const email = emailInput.value.trim();
+
+  if (!name) {
+    formMsg.className = "msg error";
+    formMsg.textContent = "Please enter your name.";
+    return;
+  }
+  if (!emailPattern.test(email)) {
+    emailInput.className = "invalid";
+    formMsg.className = "msg error";
+    formMsg.textContent = "Email is invalid";
+    return;
+  }
+  formMsg.className = "msg ok";
+  formMsg.textContent = "Thanks, " + name + "! Taking you to the application...";
+  if (VOLUNTEER_LINK) setTimeout(function () { window.location.href = VOLUNTEER_LINK; }, 1200);
+});
+
+// 6. Random orca fact button
+const facts = [
+  "Orcas are the largest members of the dolphin family.",
+  "Orcas live in family groups called pods.",
+  "Different orca pods have their own unique calls, almost like dialects.",
+  "Orcas use echolocation to find their prey in the water.",
+  "The Southern Resident killer whales number fewer than 75 individuals.",
+  "Orcas are apex predators that help keep marine food webs healthy."
+];
+let factIndex = -1;
+document.getElementById("factBtn").addEventListener("click", function () {
+  let next;
+  do { next = Math.floor(Math.random() * facts.length); } while (next === factIndex);
+  factIndex = next;
+  document.getElementById("factText").textContent = facts[next];
+});
+
+// 7. Back-to-top button (appears after scrolling down)
+const topBtn = document.getElementById("topBtn");
+window.addEventListener("scroll", function () {
+  highlightMenu();
+  topBtn.style.display = window.scrollY > 400 ? "block" : "none";
+});
+topBtn.addEventListener("click", function () {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+highlightMenu();
+</script>
+
+</body>
+</html>
